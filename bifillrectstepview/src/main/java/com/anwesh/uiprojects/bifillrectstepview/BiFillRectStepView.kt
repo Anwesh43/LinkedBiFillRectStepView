@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.bifillrectstepview
  * Created by anweshmishra on 12/10/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
@@ -194,6 +195,15 @@ class BiFillRectStepView(ctx : Context) : View(ctx) {
             bfrs.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+
+        fun create(activity : Activity) : BiFillRectStepView {
+            val view : BiFillRectStepView = BiFillRectStepView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
