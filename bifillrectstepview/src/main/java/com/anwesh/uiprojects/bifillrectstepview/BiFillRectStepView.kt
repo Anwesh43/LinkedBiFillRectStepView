@@ -14,6 +14,28 @@ import android.content.Context
 
 val nodes : Int = 5
 
+
+fun Canvas.drawBFRNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = w / (nodes + 1)
+    val size : Float = gap/3
+    paint.color = Color.parseColor("#311B92")
+    save()
+    translate(gap * i + gap, h/2)
+    paint.style = Paint.Style.STROKE
+    drawRect(RectF(-size, -size, size, size), paint)
+    for(j in 0..1) {
+        val sf : Float = 1f - 2 * j
+        val sc : Float = Math.min(0.5f, Math.max(scale - 0.5f * j, 0f)) * 2
+        save()
+        scale(sf, sf)
+        paint.style = Paint.Style.FILL
+        drawRect(RectF(-size, -size, size, -size + size * sc), paint)
+        restore()
+    }
+    restore()
+}
 class BiFillRectStepView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
