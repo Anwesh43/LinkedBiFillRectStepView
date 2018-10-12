@@ -171,4 +171,28 @@ class BiFillRectStepView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BiFillRectStepView) {
+
+        private val animator : Animator = Animator(view)
+
+        private val bfrs : BiFillRectStep = BiFillRectStep(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            bfrs.draw(canvas, paint)
+            animator.animate {
+                bfrs.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bfrs.startUpdating {
+                animator.start()
+            }
+        }
+
+    }
 }
