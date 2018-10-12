@@ -100,4 +100,49 @@ class BiFillRectStepView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class BFRNode(var i : Int, val state : State = State()) {
+
+        private var next : BFRNode? = null
+
+        private var prev : BFRNode? = null
+
+        fun addNeighbor() {
+            if (i < nodes - 1) {
+                next = BFRNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        init {
+            addNeighbor()
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawBFRNode(i, state.scale, paint)
+            next?.draw(canvas, paint)
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            state.update {
+                cb(i, it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : BFRNode {
+            var curr : BFRNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
