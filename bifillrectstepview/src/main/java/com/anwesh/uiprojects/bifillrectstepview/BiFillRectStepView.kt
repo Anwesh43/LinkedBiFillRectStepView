@@ -25,6 +25,8 @@ fun Canvas.drawBFRNode(i : Int, scale : Float, paint : Paint) {
     save()
     translate(gap * i + gap, h/2)
     paint.style = Paint.Style.STROKE
+    paint.strokeWidth = Math.min(w, h) / 60
+    paint.strokeCap = Paint.Cap.ROUND
     drawRect(RectF(-size, -size, size, size), paint)
     for(j in 0..1) {
         val sf : Float = 1f - 2 * j
